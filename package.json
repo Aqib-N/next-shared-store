@@ -1,7 +1,7 @@
 {
   "name": "@aqib-dev/next-shared-store",
   "version": "1.1.1",
-  "description": "A lightweight state-sharing utility for Next.js that enables seamless data flow between pages — no localStorage, Redux, or Context API needed.",
+  "description": "Lightweight state-sharing utility for Next.js apps — seamless data flow between pages without localStorage, Redux, or Context API.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "prepare": "npm run build"
   },
   "publishConfig": {
     "access": "public"
@@ -19,15 +20,24 @@
   "keywords": [
     "nextjs",
     "react",
-    "state",
-    "store",
-    "shared",
+    "state management",
+    "shared store",
     "typescript",
     "javascript",
-    "zustand"
+    "zustand",
+    "state sharing",
+    "frontend"
   ],
   "author": "Aqib Nawaz <aqibalipk777@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/Aqib-N/next-shared-store",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aqib-N/next-shared-store.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Aqib-N/next-shared-store/issues"
+  },
   "peerDependencies": {
     "react": ">=17.0.0"
   },
