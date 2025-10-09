@@ -1,6 +1,6 @@
 {
   "name": "next-shared-store",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight state-sharing utility for Next.js that enables seamless data flow between pages — no localStorage, Redux, or Context API needed.",
   "main": "dist/index.js",
   "module": "dist/index.js",
