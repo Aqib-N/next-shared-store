@@ -1,0 +1,34 @@
+# Exclude source files
+src/
+tsconfig.json
+
+# Exclude tests
+__tests__/
+*.test.ts
+*.spec.ts
+coverage/
+
+# Exclude development files
+node_modules/
+.env
+.env.local
+.env.*.local
+*.log
+
+# Exclude build configs
+.vscode/
+.idea/
+.github/
+.gitignore
+npm-debug.log*
+yarn-error.log*
+
+# Exclude local artifacts
+*.tgz
+*.tsbuildinfo
+*.swp
+tmp/
+temp/
+
+# Keep only dist/
+!dist/

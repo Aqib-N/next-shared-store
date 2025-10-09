@@ -1,0 +1,45 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+dist/
+coverage/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Test results
+jest-cache/
+jest-test-results.json
+
+# Local package tarballs
+*.tgz
+
+# Temporary files
+tmp/
+temp/
+
+# TypeScript
+*.d.ts.map
+
+# GitHub Actions cache
+.github/workflows/*.tmp
