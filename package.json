@@ -13,6 +13,9 @@
     "build": "tsc",
     "prepublishOnly": "npm run build"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "keywords": [
     "nextjs",
     "react",

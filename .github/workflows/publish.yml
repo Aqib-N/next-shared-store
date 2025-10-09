@@ -1,10 +1,10 @@
-name: Publish to npm
+name: Build and Publish to npm
 
 on:
   workflow_dispatch:
   push:
     tags:
-      - "v*" # Only run when you push a tag like v1.0.0
+      - "v*" # Run only when a tag like v1.0.0 is pushed
 
 jobs:
   build-and-publish:
@@ -26,8 +26,17 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Verify npm authentication
+        run: |
+          echo "Checking npm authentication..."
+          npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Publish to npm
         if: startsWith(github.ref, 'refs/tags/v')
-        run: npm publish --access public
+        run: |
+          echo "Publishing version $(node -p "require('./package.json').version")"
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
