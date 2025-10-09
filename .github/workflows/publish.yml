@@ -4,21 +4,21 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - "v*" # Run only when a tag like v1.0.0 is pushed
+      - "v*" # Run only when you push a tag like v1.0.0
 
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org/"
+          always-auth: true
 
       - name: Install dependencies
         run: npm ci
@@ -26,17 +26,24 @@ jobs:
       - name: Build package
         run: npm run build
 
-      - name: Verify npm authentication
+      - name: Debug npm auth & version
         run: |
-          echo "Checking npm authentication..."
+          echo "Version to publish: $(node -p "require('./package.json').version")"
+          npm config list
           npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm
         if: startsWith(github.ref, 'refs/tags/v')
+        run: npm publish --access public --verbose
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Debug npm auth & version
         run: |
-          echo "Publishing version $(node -p "require('./package.json').version")"
-          npm publish --access public
+          echo "Version to publish: $(node -p "require('./package.json').version")"
+          npm config list
+          npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
