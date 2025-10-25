@@ -1,4 +1,3 @@
-
 # Next Shared State 🚀
 
 Enhanced state sharing for Next.js with IndexedDB persistence and URL data transfer between static and dynamic pages.
@@ -15,11 +14,13 @@ Enhanced state sharing for Next.js with IndexedDB persistence and URL data trans
 - 🪶 **Lightweight** - Zero dependencies, minimal footprint
 
 ## 🚀 Installation
+
 ```bash
 npm install next-shared-state
 ```
 
 ## 📖 Quick Start
+
 ### Basic Usage
 
 ```bash
@@ -31,12 +32,12 @@ export default function UserProfile() {
 
   return (
     <div>
-      <input 
-        value={user.name} 
+      <input
+        value={user.name}
         onChange={(e) => setUser({ ...user, name: e.target.value })}
         placeholder="Name"
       />
-      <input 
+      <input
         value={user.email}
         onChange={(e) => setUser({ ...user, email: e.target.value })}
         placeholder="Email"
@@ -45,14 +46,16 @@ export default function UserProfile() {
   );
 }
 ```
+
 ### Access from Any Page
+
 ```bash
 // pages/dashboard.jsx
 import { useSharedData } from 'next-shared-state';
 
 export default function Dashboard() {
   const [user] = useSharedData('user');
-  
+
   return (
     <div>
       <h1>Welcome, {user.name}!</h1>
@@ -61,8 +64,10 @@ export default function Dashboard() {
   );
 }
 ```
+
 ## 🎯 Core API
- - **useSharedData(key, initialValue?, options?)**
+
+- **useSharedData(key, initialValue?, options?)**
 
 React hook for accessing and updating shared data.
 
@@ -73,7 +78,8 @@ const [data, setData] = useSharedData('key', initialValue, {
   category: 'user'     // Data category
 });
 ```
- - **setSharedData(key, value, options?)**
+
+- **setSharedData(key, value, options?)**
 
 Programmatically set shared data.
 
@@ -85,8 +91,11 @@ setSharedData('cart', { items: [] }, {
   ttl: '2hours'
 });
 ```
+
 ## 🔄 Persistence Options
+
 **1. IndexedDB (Long-term Storage)**
+
 ```bash
 // User preferences - store permanently
 const [prefs, setPrefs] = useSharedData('preferences', {
@@ -104,16 +113,18 @@ const [cart, setCart] = useSharedData('cart', [], {
   category: 'commerce'
 });
 ```
+
 **1. IndexedDB (Long-term Storage)**
+
 ```bash
 // Static page - send data to dynamic page
 import { createTransferURL } from 'next-shared-state';
 
 export default function ProductList() {
   const handleViewProduct = (product) => {
-    const url = createTransferURL('/product-details', { 
+    const url = createTransferURL('/product-details', {
       productId: product.id,
-      productName: product.name 
+      productName: product.name
     });
     window.location.href = url;
   };
@@ -121,12 +132,13 @@ export default function ProductList() {
   return <button onClick={() => handleViewProduct(product)}>View Details</button>;
 }
 ```
+
 ```bash
 // Dynamic page - receive data automatically
 export default function ProductDetails() {
   // Data automatically extracted from URL
   const [productData] = useSharedData('productData');
-  
+
   return (
     <div>
       <h1>{productData?.productName}</h1>
@@ -135,35 +147,42 @@ export default function ProductDetails() {
   );
 }
 ```
+
 **3. Memory Only (Temporary)**
+
 ```bash
 // Temporary UI state
 const [isOpen, setIsOpen] = useSharedData('modalState', false, {
   persist: 'memory' // Clears on page refresh
 });
 ```
+
 ## ⏰ TTL (Time To Live) Examples
+
 **Using Presets**
+
 ```bash
 import { TTL } from 'next-shared-state';
 
 // Various TTL examples
-const [session] = useSharedData('session', {}, { 
+const [session] = useSharedData('session', {}, {
   ttl: TTL.short,     // 30 minutes
   persist: 'indexedDB'
 });
 
-const [cache] = useSharedData('cache', {}, { 
+const [cache] = useSharedData('cache', {}, {
   ttl: TTL.medium,    // 1 day
-  persist: 'indexedDB' 
+  persist: 'indexedDB'
 });
 
-const [prefs] = useSharedData('prefs', {}, { 
+const [prefs] = useSharedData('prefs', {}, {
   ttl: TTL.forever,   // Never expires
   persist: 'indexedDB'
 });
 ```
+
 **Human-Readable Formats**
+
 ```bash
 // All these formats work:
 const [data1] = useSharedData('key', value, { ttl: '30min' });
@@ -172,8 +191,11 @@ const [data3] = useSharedData('key', value, { ttl: '3 days' });
 const [data4] = useSharedData('key', value, { ttl: 3600000 }); // milliseconds
 const [data5] = useSharedData('key', value, { ttl: 60 }); // minutes (assumed)
 ```
+
 ## 🗂️ Data Management
+
 **Clear Data by Category**
+
 ```bash
 import { clearPersistedData } from 'next-shared-state';
 
@@ -186,7 +208,9 @@ await clearPersistedData('user');
 // Clear everything
 await clearPersistedData();
 ```
+
 **Export/Import Data**
+
 ```bash
 import { exportAllData, importData } from 'next-shared-state';
 
@@ -200,27 +224,33 @@ if (saved) {
   await importData(saved);
 }
 ```
+
 **Get All Stored Keys**
+
 ```bash
 import { getPersistedKeys } from 'next-shared-state';
 
 const keys = await getPersistedKeys();
 console.log(keys); // ['user', 'cart', 'preferences']
 ```
+
 ## 🔧 Advanced Usage
+
 **Direct IndexedDB Access**
+
 ```bash
 import { indexedDBStore } from 'next-shared-state';
 
 // Advanced operations
-await indexedDBStore.set('key', value, { 
-  ttl: 3600000, 
-  category: 'custom' 
+await indexedDBStore.set('key', value, {
+  ttl: 3600000,
+  category: 'custom'
 });
 
 const data = await indexedDBStore.get('key');
 await indexedDBStore.remove('key');
 ```
+
 **Cross-Tab Synchronization**
 
 Data automatically syncs between browser tabs using BroadcastChannel when using persist: `indexedDB`.
@@ -228,6 +258,7 @@ Data automatically syncs between browser tabs using BroadcastChannel when using 
 ## 🎯 Real-World Examples
 
 **E-commerce Shopping Cart**
+
 ```bash
 // Add to cart from any page
 const [cart, setCart] = useSharedData('cart', [], {
@@ -242,7 +273,9 @@ const addToCart = (product) => {
 
 // Cart persists across page refreshes and browser sessions
 ```
+
 **Multi-Step Form**
+
 ```bash
 // Step 1
 const [formData, setFormData] = useSharedData('application', {}, {
@@ -254,7 +287,9 @@ const [formData, setFormData] = useSharedData('application', {}, {
 // Step 2 - data is automatically available
 const [savedForm] = useSharedData('application');
 ```
+
 **User Preferences**
+
 ```bash
 // Settings saved permanently
 const [settings, setSettings] = useSharedData('settings', {
@@ -266,9 +301,11 @@ const [settings, setSettings] = useSharedData('settings', {
   category: 'preferences'
 });
 ```
+
 ## 📚 API Reference
 
 **TTL Presets**
+
 ```bash
 TTL['5min']      // 5 minutes
 TTL['1hour']     // 1 hour
@@ -283,13 +320,14 @@ TTL.medium       // 1 day
 TTL.long         // 1 week
 TTL.veryLong     // 1 month
 ```
+
 **Store Options**
 
-| Option     | Type                         | Default     | Description     |
-| :--------  | :----------------------------| :-------    | :-------------- |
-| `persist`  | `'indexedDB' 'url' 'memory'` | `'memory'`  |  Storage method |
-| `ttl`      | `'string' 'number'`          | `undefined` |  Time to live   |
-| `category` | `string	`                   | `'default'` |  Data category  |
+| Option     | Type                         | Default     | Description    |
+| :--------- | :--------------------------- | :---------- | :------------- |
+| `persist`  | `'indexedDB' 'url' 'memory'` | `'memory'`  | Storage method |
+| `ttl`      | `'string' 'number'`          | `undefined` | Time to live   |
+| `category` | `string	`                     | `'default'` | Data category  |
 
 ## 🔍 TypeScript Support
 
