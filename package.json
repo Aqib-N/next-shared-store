@@ -1,7 +1,7 @@
 {
-  "name": "@aqib-dev/next-shared-store",
-  "version": "1.1.1",
-  "description": "Lightweight state-sharing utility for Next.js apps — seamless data flow between pages without localStorage, Redux, or Context API.",
+  "name": "next-shared-state",
+  "version": "2.0.0",
+  "description": "Enhanced state sharing for Next.js with IndexedDB persistence and URL data transfer between pages and components.",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,13 +20,14 @@
   "keywords": [
     "nextjs",
     "react",
-    "state management",
-    "shared store",
-    "typescript",
-    "javascript",
-    "zustand",
-    "state sharing",
-    "frontend"
+    "state-management",
+    "shared-state",
+    "persistence",
+    "indexeddb",
+    "url-transfer",
+    "static-dynamic",
+    "page-state",
+    "cross-page"
   ],
   "author": "Aqib Nawaz <aqibalipk777@gmail.com>",
   "license": "MIT",
@@ -44,5 +45,12 @@
   "devDependencies": {
     "@types/react": "^19.2.2",
     "typescript": "^5.9.3"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.js"
+    }
   }
 }
